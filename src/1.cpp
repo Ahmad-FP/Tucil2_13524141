@@ -245,9 +245,9 @@ auto calcPointsOrder(cube parent, int order){
 }
 
 vector<vec3> calcPoints(cube cur){
-    double unitX = cur.maxX - cur.minX;                                                                                                                                                                                                      
-    double unitY = cur.maxY - cur.minY;                                                                                                                                                                                                      
-    double unitZ = cur.maxZ - cur.minZ;   
+    double unitX = (cur.maxX + cur.minX)/2 - cur.minX;
+    double unitY = (cur.maxY + cur.minY)/2 - cur.minY;
+    double unitZ = (cur.maxZ + cur.minZ)/2 - cur.minZ;
     vector<vec3> coords(8);
     coords[0].arr[0] = cur.minX;coords[0].arr[1]=cur.minY;coords[0].arr[2] = cur.minZ;
      
