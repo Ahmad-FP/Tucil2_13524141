@@ -482,12 +482,13 @@ int main(){
         cout <<"Pilih aksi yang ingin dilakukan\n";
         cout << "1. Voxelisasi\n";
         cout << "2. Save\n";
-        cout << "3. Exit\n";
+        cout << "3. Reset Variabel\n";
+        cout << "4. Exit\n";
         cin >> choice;
         if(choice == 1)
         {
             string name;
-            cout << "Masukkan kedalaman maksimum voxelisasi\n";
+            cout << "Masukkan kedalaman maksimum voxelisasi (Disarankan < 6)\n";
             cin >>maxDepth;
             cout << "Masukkan nama file .obj yang ingin di voxelisasi (contoh: pumpkin.obj)\n";
             cin >>name;
@@ -543,9 +544,9 @@ int main(){
             "▐▌     █  ▐▌ ▐▌ █ ▐▌   \n"
             " ▝▀▚▖  █  ▐▛▀▜▌ █  ▝▀▚▖\n"
             "▗▄▄▞▘  █  ▐▌ ▐▌ █ ▗▄▄▞▘\n";
-            cout << "[STATS] 1. Banyaknya voxel yang terbentuk " << dInfo[maxDepth].first << endl;
-            cout << "[STATS] 2. Banyaknya Vertex yang terbentuk " << cPoint.size() << endl;
-            cout << "[STATS] 3. Banyaknya faces yang terbentuk " << cFace.size() << endl;
+            cout << "[STATS] Banyaknya voxel yang terbentuk " << dInfo[maxDepth].first << endl;
+            cout << "[STATS] Banyaknya Vertex yang terbentuk " << cPoint.size() << endl;
+            cout << "[STATS] Banyaknya faces yang terbentuk " << cFace.size() << endl;
             cout << "////////////////////////////////////////\n";
             cout << "////////////////////////////////////////\n";
             for (int i = 0; i < dInfo.size(); i++)
@@ -556,11 +557,24 @@ int main(){
             cout << "////////////////////////////////////////\n";
             for (int i = 0; i < dInfo.size(); i++)
             {
-                cout<< "[STATS] " << i+1 << ". banyaknya node dengan depth " << i << " yang tidak perlu ditelusuri " << dInfo[i].second << endl; 
+                cout<< "[STATS] " << i+1 << ". banyaknya node dengan depth " << i << " yang tidak perlu ditelusuri " << abs(dInfo[i].second) << endl; 
             }
+            int ocDepth = 0;
+            for (int i = dInfo.size()-1; i >= 0 ; i--)
+            {
+                if (dInfo[i].first != 0 || dInfo[i].second != 0)
+                {
+                    ocDepth = i;break;
+                }
+                
+            }
+            
+            cout << "////////////////////////////////////////\n";
+            cout << "[STATS] Kedalaman Octree " << ocDepth<< endl;
+            cout << "[STATS] Periode eksekusi fungsi voxelisasi " << t << endl;
             cout << "////////////////////////////////////////\n";
             cout << "////////////////////////////////////////\n";
-            cout << "////////////////////////////////////////\n";
+
         }else if (choice == 2)
         {
             string name;
@@ -569,6 +583,11 @@ int main(){
             save(name);
             resetvar();
         }else if (choice == 3)
+        {
+            resetvar();
+            cout << "Variabel telah direset\n";
+        }
+         else if (choice == 4)
         {
             cout << 
             "110 plis\n"
