@@ -521,8 +521,8 @@ int main(){
             dInfo.assign(maxDepth+1,{0,0});
             cube c1;
             vector<tri*> tr;
-            
-            c1.maxX =maxX;c1.minX = minX;c1.minY =minY;c1.maxY = maxY;c1.minZ = minZ;c1.maxZ =maxZ;
+            double rusuk = max({maxX - minX, maxY - minY, maxZ - minZ});
+            c1.maxX =maxX;c1.minX = maxX - rusuk;c1.minY = maxY - rusuk;c1.maxY = maxY;c1.minZ = maxZ - rusuk;c1.maxZ =maxZ;
             for (int i = 0; i < face.size(); i++)
             {
                 vec3 a = point[face[i].arr[1]],b = point[face[i].arr[2]];
