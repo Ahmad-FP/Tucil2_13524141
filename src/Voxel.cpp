@@ -11,11 +11,12 @@
 #include <algorithm>
 #include <queue>
 #include <iomanip>
-
+#include <cmath>
 
 using namespace std;
 
 #define pb push_back
+
 
 struct vec3{
     double arr[3];
@@ -31,13 +32,20 @@ struct tri{
         return arr[0] == a.arr[0] && arr[1] == a.arr[1] && arr[2] == a.arr[2] && normal == a.normal; 
     }
 };
+
+vec3 roundT5(vec3 v){
+    v.arr[0] = round(v.arr[0] * 1e5) / 1e5;
+    v.arr[1] = round(v.arr[1] * 1e5) / 1e5;
+    v.arr[2] = round(v.arr[2] * 1e5) / 1e5;
+    return v;
+}
 namespace std {
     template <>
     struct hash<vec3> {
         size_t operator()(const vec3& v) const {
             size_t h = 0;
             for (int i = 0; i < 3; ++i) {
-                h ^= std::hash<double>{}(v.arr[i]) + 0x9e3779b9 + (h << 6) + (h >> 2);
+                h ^= hash<double>{}(v.arr[i]) + 0x9e3779b9 + (h << 6) + (h >> 2);
             }
             return h;
         }
@@ -47,9 +55,9 @@ namespace std {
         size_t operator()(const tri& t) const {
             size_t h = 0;
             for (int i = 0; i < 3; ++i) {
-                h ^= std::hash<int>{}(t.arr[i]) + 0x9e3779b9 + (h << 6) + (h >> 2);
+                h ^= hash<int>{}(t.arr[i]) + 0x9e3779b9 + (h << 6) + (h >> 2);
             }
-            h ^= std::hash<vec3>{}(t.normal);
+            h ^= hash<vec3>{}(t.normal);
             return h;
         }
     };
@@ -416,6 +424,7 @@ void voxelize(cube parent, vector<tri*> tr,int depth){
         
     }else{
         vector<vec3> cords = static_cast<vector<vec3>&&> (calcPoints(parent));
+        for (int i = 0; i < 8; i++) cords[i] = roundT5(cords[i]);
         cpFlag.lock();
         for (int i = 0; i < 8; i++)
         {
